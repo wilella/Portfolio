@@ -1,1 +1,28 @@
-maryjackson.tech
+name: Update CNAME
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  update-cname:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Create or update CNAME file
+      run: echo "maryjackson.tech" > CNAME
+
+    - name: Commit changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add CNAME
+        git commit -m 'Update CNAME file'
+        git push
